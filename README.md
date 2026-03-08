@@ -2,8 +2,6 @@
 
 # 🔐 Multi-User Secure Private Diary
 ### Advanced Web Development & Cybersecurity Project
-**Student Name:** [Your Name]  
-**Student ID:** [Your ID]
 
 </div>
 
@@ -45,7 +43,3 @@ The interface is designed with a **Mobile-First** approach:
 * `16px` font sizes to prevent automatic zoom on iOS devices.
 
 ---
-<div align="center">
-  <sub>Developed for educational purposes in Web Development and DBMS.</sub>
-</div>
-}
