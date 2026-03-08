@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Daily Diary</title>
+    <link rel="stylesheet" href="diary-style.css">
+</head>
+<body>
+    <div class="diary-container">
+    <h1>Private Secure Diary</h1>
+    
+    <div id="login-area">
+        <input type="password" id="userPass" placeholder="Enter Secret Password">
+        <button onclick="unlockDiary()">Unlock Diary</button>
+    </div>
+
+    <div id="diary-area" style="display:none;">
+        <p id="date-display"></p>
+        <textarea id="diary-input"></textarea>
+        <button onclick="encryptAndSave()">Encrypt & Save</button>
+        <button onclick="lockDiary()">Lock & Logout</button>
+        <p id="status"></p>
+    </div>
+</div>
+    <script src="diary-script.js"></script>
+</body>
+</html>
