@@ -1,59 +1,53 @@
-// This runs when the page loads, but ONLY shows the date, not the diary
-window.onload = function() {
-    const now = new Date();
-    document.getElementById('date-display').textContent = now.toDateString();
-};
-
 function encryptAndSave() {
-    const password = document.getElementById('userPass').value;
+    const user = document.getElementById('userName').value.trim().toLowerCase();
+    const pass = document.getElementById('userPass').value;
     const text = document.getElementById('diary-input').value;
 
-    if (!password) {
-        alert("Please enter a password to lock your entry!");
-        return;
-    }
+    if (!user || !pass) return alert("Enter Username and Password!");
 
-    // SCRAMBLE THE TEXT
-    const encryptedText = CryptoJS.AES.encrypt(text, password).toString();
-    localStorage.setItem('secure_diary_data', encryptedText);
+    // Encrypt the text
+    const encrypted = CryptoJS.AES.encrypt(text, pass).toString();
     
-    // Visual Feedback
-    document.getElementById('status').textContent = "Encrypted & Saved!";
-    setTimeout(() => { document.getElementById('status').textContent = ""; }, 2000);
+    // Save with a unique key for THIS user
+    localStorage.setItem('diary_user_' + user, encrypted);
+    
+    document.getElementById('status').textContent = "Saved for " + user;
 }
 
 function unlockDiary() {
-    const password = document.getElementById('userPass').value;
-    const encryptedData = localStorage.getItem('secure_diary_data');
-
-    if (!password) {
-        alert("Enter your password to unlock.");
-        return;
-    }
+    const user = document.getElementById('userName').value.trim().toLowerCase();
+    const pass = document.getElementById('userPass').value;
+    
+    // Look for data specific to this username
+    const encryptedData = localStorage.getItem('diary_user_' + user);
 
     if (!encryptedData) {
-        alert("No saved diary found. Starting a new one!");
-        showDiaryArea();
+        alert("No diary found for " + user + ". Starting a new one!");
+        showDiary(user);
         return;
     }
 
     try {
-        // UNSCRAMBLE THE TEXT
-        const bytes = CryptoJS.AES.decrypt(encryptedData, password);
+        const bytes = CryptoJS.AES.decrypt(encryptedData, pass);
         const originalText = bytes.toString(CryptoJS.enc.Utf8);
 
-        if (originalText.length > 0) {
+        if (originalText) {
             document.getElementById('diary-input').value = originalText;
-            showDiaryArea();
+            showDiary(user);
         } else {
-            alert("Wrong password! Access denied.");
+            alert("Wrong password for this user!");
         }
     } catch (e) {
-        alert("Error: Incorrect password.");
+        alert("Access Denied.");
     }
 }
 
-function showDiaryArea() {
+function showDiary(user) {
     document.getElementById('login-area').style.display = 'none';
     document.getElementById('diary-area').style.display = 'block';
+    document.getElementById('welcome-user').textContent = "Hello, " + user;
+}
+
+function lockDiary() {
+    location.reload();
 }
