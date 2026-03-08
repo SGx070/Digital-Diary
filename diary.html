@@ -8,19 +8,23 @@
     <link rel="stylesheet" href="diary-style.css">
 </head>
 <body>
-    <div class="diary-container">
+<div class="diary-container">
     <h1>Private Secure Diary</h1>
     
     <div id="login-area">
-        <input type="password" id="userPass" placeholder="Enter Secret Password">
-        <button onclick="unlockDiary()">Unlock Diary</button>
+        <input type="text" id="userName" placeholder="Your Username">
+        <input type="password" id="userPass" placeholder="Secret Password">
+        <button onclick="unlockDiary()">Unlock My Diary</button>
     </div>
 
     <div id="diary-area" style="display:none;">
+        <h2 id="welcome-user"></h2>
         <p id="date-display"></p>
         <textarea id="diary-input"></textarea>
-        <button onclick="encryptAndSave()">Encrypt & Save</button>
-        <button onclick="lockDiary()">Lock & Logout</button>
+        <div class="button-group">
+            <button onclick="encryptAndSave()">Save & Encrypt</button>
+            <button onclick="lockDiary()" class="secondary">Lock</button>
+        </div>
         <p id="status"></p>
     </div>
 </div>
